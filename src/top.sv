@@ -18,7 +18,7 @@ module top(input logic clk, input logic reset, input logic [31:0] cyc_cnt, outpu
    logic [7:0] ui_in, uo_out;
    
    logic [31:0] r;  // a random value
-   always @(posedge clk) r <= 0;
+   always @(posedge clk) r <= $urandom();
    assign ui_in = r[7:0];
    
    logic ena = 1'b0;
@@ -275,7 +275,7 @@ logic [3:0] FpgaPins_Fpga_PIPE_row_a0;
                      assign FpgaPins_Fpga_PIPE_reset_n1 = reset;
                   //_@0
                      assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ui_in[3:0];
-                     assign uo_out = {FpgaPins_Fpga_PIPE_LastButton_a0, FpgaPins_Fpga_PIPE_Col_a0};
+                     assign uo_out = 8'h55; //{$LastButton, $Col};
                      assign FpgaPins_Fpga_PIPE_Col_n1[3:0] =
                         FpgaPins_Fpga_PIPE_reset_a0 ? 4'b1 :
                                  {FpgaPins_Fpga_PIPE_Col_a0[2:0], FpgaPins_Fpga_PIPE_Col_a0[3]};

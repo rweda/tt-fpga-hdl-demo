@@ -320,8 +320,8 @@ logic FpgaPins_Fpga_PIPE_update_a0;
                      assign FpgaPins_Fpga_PIPE_reset_n1 = reset;
                   //_@0
                      
-                     assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ui_in[3:0];
-                     assign uo_out = {FpgaPins_Fpga_PIPE_LastButton_a0, 4'b1 << FpgaPins_Fpga_PIPE_Col_a0};
+                     assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ~(ui_in[3:0]);
+                     assign uo_out = {FpgaPins_Fpga_PIPE_LastButton_a0, ~(4'b1 << FpgaPins_Fpga_PIPE_Col_a0)};
                      assign FpgaPins_Fpga_PIPE_reset_falls_a0 = ! FpgaPins_Fpga_PIPE_reset_a0 && FpgaPins_Fpga_PIPE_reset_a1;
                      assign FpgaPins_Fpga_PIPE_ResetFell_n1 = FpgaPins_Fpga_PIPE_reset_falls_a0 || FpgaPins_Fpga_PIPE_ResetFell_a0;
                      assign FpgaPins_Fpga_PIPE_Seq_n1[21:0] =

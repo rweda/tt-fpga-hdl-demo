@@ -275,7 +275,7 @@ logic [3:0] FpgaPins_Fpga_PIPE_row_a0;
                      assign FpgaPins_Fpga_PIPE_reset_n1 = reset;
                   //_@0
                      assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ui_in[3:0];
-                     assign uo_out = 8'h55; //{$LastButton, $Col};
+                     assign uo_out = {~ FpgaPins_Fpga_PIPE_LastButton_a0, FpgaPins_Fpga_PIPE_Col_a0};
                      assign FpgaPins_Fpga_PIPE_Col_n1[3:0] =
                         FpgaPins_Fpga_PIPE_reset_a0 ? 4'b1 :
                                  {FpgaPins_Fpga_PIPE_Col_a0[2:0], FpgaPins_Fpga_PIPE_Col_a0[3]};

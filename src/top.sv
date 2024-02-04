@@ -295,7 +295,7 @@ logic FpgaPins_Fpga_PIPE_update_a0;
                   //_@0
                      
                      assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ui_in[3:0];
-                     assign uo_out = {FpgaPins_Fpga_PIPE_Col_a0, 2'b0, | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_reset_a0};
+                     assign uo_out = {FpgaPins_Fpga_PIPE_Col_a0, ! | FpgaPins_Fpga_PIPE_Col_a0, ! FpgaPins_Fpga_PIPE_reset_a0, | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_reset_a0};
                      assign FpgaPins_Fpga_PIPE_Seq_n1[2:0] =
                         FpgaPins_Fpga_PIPE_reset_a0 ? 0 : FpgaPins_Fpga_PIPE_Seq_a0 + 1;
                      assign FpgaPins_Fpga_PIPE_update_a0 = FpgaPins_Fpga_PIPE_Seq_a0 == 0;

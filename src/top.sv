@@ -4,7 +4,7 @@
 //_\SV
    // Include Tiny Tapeout Lab.
    // Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlv_lib/tiny_tapeout_lib.tlv"// Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlv_lib/fpga_includes.tlv"
-//_\source top.tlv 63
+//_\source top.tlv 78
 
 //_\SV
 
@@ -99,6 +99,64 @@ logic [7:0] L0_sseg_digit_n_a0;
 // For $sseg_segment_n.
 logic [6:0] L0_sseg_segment_n_a0;
 
+// For /fpga_pins/fpga|pipe$Button.
+logic [15:0] FpgaPins_Fpga_PIPE_Button_n1,
+             FpgaPins_Fpga_PIPE_Button_a0;
+
+// For /fpga_pins/fpga|pipe$ButtonCnt.
+logic [3:0] FpgaPins_Fpga_PIPE_ButtonCnt_n1,
+            FpgaPins_Fpga_PIPE_ButtonCnt_a0;
+
+// For /fpga_pins/fpga|pipe$Col.
+logic [3:0] FpgaPins_Fpga_PIPE_Col_n1,
+            FpgaPins_Fpga_PIPE_Col_a0;
+
+// For /fpga_pins/fpga|pipe$LastButton.
+logic [3:0] FpgaPins_Fpga_PIPE_LastButton_n1,
+            FpgaPins_Fpga_PIPE_LastButton_a0;
+
+// For /fpga_pins/fpga|pipe$reset.
+logic FpgaPins_Fpga_PIPE_reset_n1,
+      FpgaPins_Fpga_PIPE_reset_a0;
+
+// For /fpga_pins/fpga|pipe$row.
+logic [3:0] FpgaPins_Fpga_PIPE_row_a0;
+
+
+
+
+   //
+   // Scope: /fpga_pins
+   //
+
+
+      //
+      // Scope: /fpga
+      //
+
+
+         //
+         // Scope: |pipe
+         //
+
+            // Staging of $Button.
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_Button_a0[15:0] <= FpgaPins_Fpga_PIPE_Button_n1[15:0];
+
+            // Staging of $ButtonCnt.
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_ButtonCnt_a0[3:0] <= FpgaPins_Fpga_PIPE_ButtonCnt_n1[3:0];
+
+            // Staging of $Col.
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_Col_a0[3:0] <= FpgaPins_Fpga_PIPE_Col_n1[3:0];
+
+            // Staging of $LastButton.
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_LastButton_a0[3:0] <= FpgaPins_Fpga_PIPE_LastButton_n1[3:0];
+
+            // Staging of $reset.
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_reset_a0 <= FpgaPins_Fpga_PIPE_reset_n1;
+
+
+
+
 
 
 
@@ -133,6 +191,36 @@ logic [6:0] L0_sseg_segment_n_a0;
       end
 
       //
+      // Scope: /fpga_pins
+      //
+      if (1) begin : \/fpga_pins 
+
+         //
+         // Scope: /fpga
+         //
+         if (1) begin : \/fpga 
+
+            //
+            // Scope: |pipe
+            //
+            if (1) begin : P_pipe
+               (* keep *) logic [15:0] \///@-1$Button ;
+               assign \///@-1$Button = FpgaPins_Fpga_PIPE_Button_n1;
+               (* keep *) logic [3:0] \///@-1$ButtonCnt ;
+               assign \///@-1$ButtonCnt = FpgaPins_Fpga_PIPE_ButtonCnt_n1;
+               (* keep *) logic [3:0] \///@-1$Col ;
+               assign \///@-1$Col = FpgaPins_Fpga_PIPE_Col_n1;
+               (* keep *) logic [3:0] \///@-1$LastButton ;
+               assign \///@-1$LastButton = FpgaPins_Fpga_PIPE_LastButton_n1;
+               (* keep *) logic  \///@-1$reset ;
+               assign \///@-1$reset = FpgaPins_Fpga_PIPE_reset_n1;
+               (* keep *) logic [3:0] \///@0$row ;
+               assign \///@0$row = FpgaPins_Fpga_PIPE_row_a0;
+            end
+         end
+      end
+
+      //
       // Scope: /switch[7:0]
       //
       for (switch = 0; switch <= 7; switch++) begin : \/switch 
@@ -147,7 +235,7 @@ logic [6:0] L0_sseg_segment_n_a0;
 //_\TLV
    /* verilator lint_off UNOPTFLAT */
    // Connect Tiny Tapeout I/Os to Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 132 as: m5+tt_connections()
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 147 as: m5+tt_connections()
       assign L0_slideswitch_a0[7:0] = ui_in;
       assign L0_sseg_segment_n_a0[6:0] = ~ uo_out[6:0];
       assign L0_sseg_decimal_point_n_a0 = ~ uo_out[7];
@@ -155,7 +243,7 @@ logic [6:0] L0_sseg_segment_n_a0;
    //_\end_source
 
    // Instantiate the Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 135 as: m5+board(/top, /fpga, 7, $, , my_design)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 150 as: m5+board(/top, /fpga, 7, $, , my_design)
       
       //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 355   // Instantiated from /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv, 309 as: m4+thanks(m5__l(309)m5_eval(m5_get(BOARD_THANKS_ARGS)))
          //_/thanks
@@ -182,7 +270,22 @@ logic [6:0] L0_sseg_segment_n_a0;
             
                // Note that pipesignals assigned here can be found under /fpga_pins/fpga.
             
-            
+               //_|pipe
+                  //_@-1
+                     assign FpgaPins_Fpga_PIPE_reset_n1 = reset;
+                  //_@0
+                     assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ui_in[3:0];
+                     assign uo_out = {FpgaPins_Fpga_PIPE_LastButton_a0, FpgaPins_Fpga_PIPE_Col_a0};
+                     assign FpgaPins_Fpga_PIPE_Col_n1[3:0] =
+                        FpgaPins_Fpga_PIPE_reset_a0 ? 4'b1 :
+                                 FpgaPins_Fpga_PIPE_Col_a0 << 1;
+                     assign FpgaPins_Fpga_PIPE_Button_n1[15:0] =
+                        {FpgaPins_Fpga_PIPE_Col_a0[0] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[3:0],
+                         FpgaPins_Fpga_PIPE_Col_a0[1] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[7:4],
+                         FpgaPins_Fpga_PIPE_Col_a0[2] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[11:8],
+                         FpgaPins_Fpga_PIPE_Col_a0[3] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[15:12]};
+                     assign FpgaPins_Fpga_PIPE_ButtonCnt_n1[3:0] = FpgaPins_Fpga_PIPE_reset_a0 ? 3'h0 : FpgaPins_Fpga_PIPE_ButtonCnt_a0 + 3'h1;
+                     assign FpgaPins_Fpga_PIPE_LastButton_n1[3:0] = FpgaPins_Fpga_PIPE_Button_a0[FpgaPins_Fpga_PIPE_ButtonCnt_a0] ? FpgaPins_Fpga_PIPE_ButtonCnt_a0 : FpgaPins_Fpga_PIPE_LastButton_a0;
             
             
                // Connect Tiny Tapeout outputs. Note that uio_ outputs are not available in the Tiny-Tapeout-3-based FPGA boards.
@@ -225,7 +328,7 @@ logic [6:0] L0_sseg_segment_n_a0;
       
    //_\end_source
    // Label the switch inputs [0..7] (1..8 on the physical switch panel) (top-to-bottom).
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 137 as: m5+tt_input_labels_viz(⌈"UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED"⌉)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 152 as: m5+tt_input_labels_viz(⌈"UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED"⌉)
       for (input_label = 0; input_label <= 7; input_label++) begin : L1_InputLabel //_/input_label
          
       end

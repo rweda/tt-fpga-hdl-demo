@@ -4,7 +4,7 @@
 //_\SV
    // Include Tiny Tapeout Lab.
    // Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlv_lib/tiny_tapeout_lib.tlv"// Included URL: "https://raw.githubusercontent.com/os-fpga/Virtual-FPGA-Lab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlv_lib/fpga_includes.tlv"
-//_\source top.tlv 86
+//_\source top.tlv 88
 
 //_\SV
 
@@ -115,13 +115,21 @@ logic [3:0] FpgaPins_Fpga_PIPE_Col_n1,
 logic [3:0] FpgaPins_Fpga_PIPE_LastButton_n1,
             FpgaPins_Fpga_PIPE_LastButton_a0;
 
+// For /fpga_pins/fpga|pipe$ResetFell.
+logic FpgaPins_Fpga_PIPE_ResetFell_n1,
+      FpgaPins_Fpga_PIPE_ResetFell_a0;
+
 // For /fpga_pins/fpga|pipe$Seq.
 logic [22:0] FpgaPins_Fpga_PIPE_Seq_n1,
              FpgaPins_Fpga_PIPE_Seq_a0;
 
 // For /fpga_pins/fpga|pipe$reset.
 logic FpgaPins_Fpga_PIPE_reset_n1,
-      FpgaPins_Fpga_PIPE_reset_a0;
+      FpgaPins_Fpga_PIPE_reset_a0,
+      FpgaPins_Fpga_PIPE_reset_a1;
+
+// For /fpga_pins/fpga|pipe$reset_falls.
+logic FpgaPins_Fpga_PIPE_reset_falls_a0;
 
 // For /fpga_pins/fpga|pipe$row.
 logic [3:0] FpgaPins_Fpga_PIPE_row_a0;
@@ -161,11 +169,15 @@ logic FpgaPins_Fpga_PIPE_update_a0;
             // Staging of $LastButton.
             always_ff @(posedge clk) FpgaPins_Fpga_PIPE_LastButton_a0[3:0] <= FpgaPins_Fpga_PIPE_LastButton_n1[3:0];
 
+            // Staging of $ResetFell.
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_ResetFell_a0 <= FpgaPins_Fpga_PIPE_ResetFell_n1;
+
             // Staging of $Seq.
             always_ff @(posedge clk) FpgaPins_Fpga_PIPE_Seq_a0[22:0] <= FpgaPins_Fpga_PIPE_Seq_n1[22:0];
 
             // Staging of $reset.
             always_ff @(posedge clk) FpgaPins_Fpga_PIPE_reset_a0 <= FpgaPins_Fpga_PIPE_reset_n1;
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_reset_a1 <= FpgaPins_Fpga_PIPE_reset_a0;
 
 
 
@@ -225,10 +237,14 @@ logic FpgaPins_Fpga_PIPE_update_a0;
                assign \///@-1$Col = FpgaPins_Fpga_PIPE_Col_n1;
                (* keep *) logic [3:0] \///@-1$LastButton ;
                assign \///@-1$LastButton = FpgaPins_Fpga_PIPE_LastButton_n1;
+               (* keep *) logic  \///@-1$ResetFell ;
+               assign \///@-1$ResetFell = FpgaPins_Fpga_PIPE_ResetFell_n1;
                (* keep *) logic [22:0] \///@-1$Seq ;
                assign \///@-1$Seq = FpgaPins_Fpga_PIPE_Seq_n1;
                (* keep *) logic  \///@-1$reset ;
                assign \///@-1$reset = FpgaPins_Fpga_PIPE_reset_n1;
+               (* keep *) logic  \///@0$reset_falls ;
+               assign \///@0$reset_falls = FpgaPins_Fpga_PIPE_reset_falls_a0;
                (* keep *) logic [3:0] \///@0$row ;
                assign \///@0$row = FpgaPins_Fpga_PIPE_row_a0;
                (* keep *) logic  \///@0$sample ;
@@ -254,7 +270,7 @@ logic FpgaPins_Fpga_PIPE_update_a0;
 //_\TLV
    /* verilator lint_off UNOPTFLAT */
    // Connect Tiny Tapeout I/Os to Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 155 as: m5+tt_connections()
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 76   // Instantiated from top.tlv, 157 as: m5+tt_connections()
       assign L0_slideswitch_a0[7:0] = ui_in;
       assign L0_sseg_segment_n_a0[6:0] = ~ uo_out[6:0];
       assign L0_sseg_decimal_point_n_a0 = ~ uo_out[7];
@@ -262,7 +278,7 @@ logic FpgaPins_Fpga_PIPE_update_a0;
    //_\end_source
 
    // Instantiate the Virtual FPGA Lab.
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 158 as: m5+board(/top, /fpga, 7, $, , my_design)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 307   // Instantiated from top.tlv, 160 as: m5+board(/top, /fpga, 7, $, , my_design)
       
       //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv 355   // Instantiated from /raw.githubusercontent.com/osfpga/VirtualFPGALab/a069f1e4e19adc829b53237b3e0b5d6763dc3194/tlvlib/fpgaincludes.tlv, 309 as: m4+thanks(m5__l(309)m5_eval(m5_get(BOARD_THANKS_ARGS)))
          //_/thanks
@@ -295,7 +311,9 @@ logic FpgaPins_Fpga_PIPE_update_a0;
                   //_@0
                      
                      assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ui_in[3:0];
-                     assign uo_out = {FpgaPins_Fpga_PIPE_Col_a0, ! | FpgaPins_Fpga_PIPE_Col_a0, ! FpgaPins_Fpga_PIPE_reset_a0, | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_reset_a0};
+                     assign uo_out = {FpgaPins_Fpga_PIPE_Col_a0, ! | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_reset_a0, | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_ResetFell_a0};
+                     assign FpgaPins_Fpga_PIPE_reset_falls_a0 = ! FpgaPins_Fpga_PIPE_reset_a0 && FpgaPins_Fpga_PIPE_reset_a1;
+                     assign FpgaPins_Fpga_PIPE_ResetFell_n1 = FpgaPins_Fpga_PIPE_reset_falls_a0 || FpgaPins_Fpga_PIPE_ResetFell_a0;
                      assign FpgaPins_Fpga_PIPE_Seq_n1[22:0] =
                         FpgaPins_Fpga_PIPE_reset_a0 ? 0 : FpgaPins_Fpga_PIPE_Seq_a0 + 1;
                      assign FpgaPins_Fpga_PIPE_update_a0 = FpgaPins_Fpga_PIPE_Seq_a0 == 0;
@@ -355,7 +373,7 @@ logic FpgaPins_Fpga_PIPE_update_a0;
       
    //_\end_source
    // Label the switch inputs [0..7] (1..8 on the physical switch panel) (top-to-bottom).
-   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 160 as: m5+tt_input_labels_viz(⌈"UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED"⌉)
+   //_\source /raw.githubusercontent.com/osfpga/VirtualFPGALab/35e36bd144fddd75495d4cbc01c4fc50ac5bde6f/tlvlib/tinytapeoutlib.tlv 82   // Instantiated from top.tlv, 162 as: m5+tt_input_labels_viz(⌈"UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED", "UNUSED"⌉)
       for (input_label = 0; input_label <= 7; input_label++) begin : L1_InputLabel //_/input_label
          
       end

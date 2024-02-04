@@ -118,7 +118,7 @@ logic [3:0] FpgaPins_Fpga_PIPE_ButtonCnt_n1,
             FpgaPins_Fpga_PIPE_ButtonCnt_a0;
 
 // For /fpga_pins/fpga|pipe$Col.
-logic [3:0] FpgaPins_Fpga_PIPE_Col_n1,
+logic [1:0] FpgaPins_Fpga_PIPE_Col_n1,
             FpgaPins_Fpga_PIPE_Col_a0;
 
 // For /fpga_pins/fpga|pipe$LastButton.
@@ -174,7 +174,7 @@ logic FpgaPins_Fpga_PIPE_update_a0;
             always_ff @(posedge clk) FpgaPins_Fpga_PIPE_ButtonCnt_a0[3:0] <= FpgaPins_Fpga_PIPE_ButtonCnt_n1[3:0];
 
             // Staging of $Col.
-            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_Col_a0[3:0] <= FpgaPins_Fpga_PIPE_Col_n1[3:0];
+            always_ff @(posedge clk) FpgaPins_Fpga_PIPE_Col_a0[1:0] <= FpgaPins_Fpga_PIPE_Col_n1[1:0];
 
             // Staging of $LastButton.
             always_ff @(posedge clk) FpgaPins_Fpga_PIPE_LastButton_a0[3:0] <= FpgaPins_Fpga_PIPE_LastButton_n1[3:0];
@@ -243,7 +243,7 @@ logic FpgaPins_Fpga_PIPE_update_a0;
                assign \///@-1$Button = FpgaPins_Fpga_PIPE_Button_n1;
                (* keep *) logic [3:0] \///@-1$ButtonCnt ;
                assign \///@-1$ButtonCnt = FpgaPins_Fpga_PIPE_ButtonCnt_n1;
-               (* keep *) logic [3:0] \///@-1$Col ;
+               (* keep *) logic [1:0] \///@-1$Col ;
                assign \///@-1$Col = FpgaPins_Fpga_PIPE_Col_n1;
                (* keep *) logic [3:0] \///@-1$LastButton ;
                assign \///@-1$LastButton = FpgaPins_Fpga_PIPE_LastButton_n1;
@@ -321,23 +321,23 @@ logic FpgaPins_Fpga_PIPE_update_a0;
                   //_@0
                      
                      assign FpgaPins_Fpga_PIPE_row_a0[3:0] = ui_in[3:0];
-                     assign uo_out = {FpgaPins_Fpga_PIPE_Col_a0, ! | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_reset_a0, | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_ResetFell_a0};
+                     assign uo_out = {FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_Col_a0, ! | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_reset_a0, | FpgaPins_Fpga_PIPE_Col_a0, FpgaPins_Fpga_PIPE_ResetFell_a0};
                      assign FpgaPins_Fpga_PIPE_reset_falls_a0 = ! FpgaPins_Fpga_PIPE_reset_a0 && FpgaPins_Fpga_PIPE_reset_a1;
                      assign FpgaPins_Fpga_PIPE_ResetFell_n1 = FpgaPins_Fpga_PIPE_reset_falls_a0 || FpgaPins_Fpga_PIPE_ResetFell_a0;
                      assign FpgaPins_Fpga_PIPE_Seq_n1[22:0] =
                         FpgaPins_Fpga_PIPE_reset_a0 ? 0 : FpgaPins_Fpga_PIPE_Seq_a0 + 1;
                      assign FpgaPins_Fpga_PIPE_update_a0 = FpgaPins_Fpga_PIPE_Seq_a0 == 0;
                      assign FpgaPins_Fpga_PIPE_sample_a0 = FpgaPins_Fpga_PIPE_Seq_a0 == ~ 23'b0;
-                     assign FpgaPins_Fpga_PIPE_Col_n1[3:0] =
-                        FpgaPins_Fpga_PIPE_reset_a0  ? 4'b1 :
-                        FpgaPins_Fpga_PIPE_update_a0 ? {FpgaPins_Fpga_PIPE_Col_a0[2:0], FpgaPins_Fpga_PIPE_Col_a0[3]} :
-                                  FpgaPins_Fpga_PIPE_Col_a0[3:0];
+                     assign FpgaPins_Fpga_PIPE_Col_n1[1:0] =
+                        FpgaPins_Fpga_PIPE_reset_a0  ? 2'b0 :
+                        FpgaPins_Fpga_PIPE_update_a0 ? FpgaPins_Fpga_PIPE_Col_a0 + 2'b1 :
+                                  FpgaPins_Fpga_PIPE_Col_a0[1:0];
                      assign FpgaPins_Fpga_PIPE_Button_n1[15:0] =
                         FpgaPins_Fpga_PIPE_reset_a0  ? 16'b0 :
-                        FpgaPins_Fpga_PIPE_sample_a0 ? {FpgaPins_Fpga_PIPE_Col_a0[3] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[15:12],
-                                   FpgaPins_Fpga_PIPE_Col_a0[2] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[11:8],
-                                   FpgaPins_Fpga_PIPE_Col_a0[1] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[7:4],
-                                   FpgaPins_Fpga_PIPE_Col_a0[0] ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[3:0]} :
+                        FpgaPins_Fpga_PIPE_sample_a0 ? {FpgaPins_Fpga_PIPE_Col_a0 == 2'h3 ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[15:12],
+                                   FpgaPins_Fpga_PIPE_Col_a0 == 2'h2 ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[11:8],
+                                   FpgaPins_Fpga_PIPE_Col_a0 == 2'h1 ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[7:4],
+                                   FpgaPins_Fpga_PIPE_Col_a0 == 2'h0 ? FpgaPins_Fpga_PIPE_row_a0 : FpgaPins_Fpga_PIPE_Button_a0[3:0]} :
                                   FpgaPins_Fpga_PIPE_Button_a0[15:0];
                      // Check for one button each cycle.
                      assign FpgaPins_Fpga_PIPE_ButtonCnt_n1[3:0] = FpgaPins_Fpga_PIPE_reset_a0 ? 4'h0 : FpgaPins_Fpga_PIPE_ButtonCnt_a0 + 4'h1;
